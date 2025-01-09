@@ -1,7 +1,7 @@
 package Classes;
 
 public class Staff extends Person {
-    protected String role;
+    public String role;
 
 
 

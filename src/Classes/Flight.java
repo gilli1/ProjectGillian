@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Flight {
     public String flightCode;
-    String destination;
-    int economySeats;
-    int businessSeats;
-    ArrayList<Passenger> passengers;
-    ArrayList<Staff> staff;
+    public String destination;
+    public int economySeats;
+    public int businessSeats;
+    public ArrayList<Passenger> passengers;
+    public ArrayList<Staff> staff;
 
 
     public Flight(String flightCode, String destination, int economySeats, int businessSeats) {
