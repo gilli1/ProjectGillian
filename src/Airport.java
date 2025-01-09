@@ -1,3 +1,5 @@
+import Classes.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedWriter;
@@ -267,7 +269,7 @@ public class Airport {
         Ticket ticket = new Ticket(passenger, flightClass, flight);
         passenger.setTicket(ticket);
 
-        System.out.println("Ticket aangemaakt voor " + passenger.name + " op vlucht " + flightCode + " in " + flightClass + " klasse.");
+        System.out.println("Classes.Ticket aangemaakt voor " + passenger.name + " op vlucht " + flightCode + " in " + flightClass + " klasse.");
     }
 
     public void run() {
@@ -275,7 +277,7 @@ public class Airport {
         while (true) {
             System.out.println("\n1. Maak Passagier");
             System.out.println("2. Maak Vlucht");
-            System.out.println("3. Maak Ticket");
+            System.out.println("3. Maak Classes.Ticket");
             System.out.println("4. Maak Personeel");
             System.out.println("5. Wijs Personeel toe aan Vlucht");
             System.out.println("6. Boarden");

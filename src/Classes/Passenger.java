@@ -1,3 +1,5 @@
+package Classes;
+
 public class Passenger extends Person {
     private Ticket ticket;
     private double baggageWeight;

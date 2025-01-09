@@ -1,3 +1,5 @@
+package Classes;
+
 public class Ticket{
     private Passenger passenger;
     private String flightClass;
