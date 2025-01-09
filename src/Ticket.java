@@ -9,6 +9,7 @@ public class Ticket{
         this.flight = flight;
     }
 
+
     public Flight getFlight() {
         return flight;
     }

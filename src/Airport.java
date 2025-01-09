@@ -80,7 +80,6 @@ public class Airport {
             System.out.println("Destination cannot be empty!");
             return; // Stop de methode als de bestemming leeg is
         }
-
         // Vraag het aantal economy en business seats
         System.out.print("Enter number of economy seats: ");
         int economySeats = sc.nextInt();
@@ -92,7 +91,6 @@ public class Airport {
         flights.add(flight);
         System.out.println("Flight created.");
     }
-
 
 
     public void boardPassenger() {

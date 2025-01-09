@@ -6,6 +6,7 @@ public class Passenger extends Person {
         super(name, age, address);
     }
 
+
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }

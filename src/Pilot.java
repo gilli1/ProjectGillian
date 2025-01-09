@@ -3,6 +3,7 @@ public class Pilot extends Staff {
         super(name, age, address, "Pilot");
     }
 
+
     public void performFlightCheck() {
         System.out.println(name + " is performing a flight check.");
     }

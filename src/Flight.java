@@ -8,6 +8,7 @@ public class Flight {
     ArrayList<Passenger> passengers;
     private ArrayList<Staff> staff;
 
+
     public Flight(String flightCode, String destination, int economySeats, int businessSeats) {
         this.flightCode = flightCode;
         this.destination = destination;
