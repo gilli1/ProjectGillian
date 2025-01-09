@@ -8,6 +8,7 @@ public class Passenger extends Person {
 
 
 
+
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }

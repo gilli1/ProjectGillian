@@ -19,86 +19,102 @@ public class Airport {
     public void createPassenger() {
         Scanner sc = new Scanner(System.in);
 
-        // Vraag de naam van de passagier
-        System.out.print("Enter passenger name: ");
+        System.out.print("Voer de naam van de passagier in: ");
         String name = sc.nextLine();
         if (name.isEmpty()) {
-            System.out.println("Name cannot be empty!");
-            return; // Stop de methode als de naam leeg is
+            System.out.println("Naam mag niet leeg zijn!");
+            return;
         }
 
-        // Vraag de leeftijd van de passagier
-        System.out.print("Enter passenger age: ");
+
+        System.out.print("Voer de leeftijd van de passagier in: ");
         String ageInput = sc.nextLine();
         if (ageInput.isEmpty()) {
-            System.out.println("Age cannot be empty!");
-            return; // Stop de methode als de leeftijd leeg is
+            System.out.println("Leeftijd mag niet leeg zijn!");
+            return;
         }
 
         int age;
         try {
-            age = Integer.parseInt(ageInput); // Probeer de leeftijd om te zetten naar een int
+            age = Integer.parseInt(ageInput);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid age! Please enter a valid number.");
-            return; // Stop de methode als de leeftijd geen geldig getal is
+            System.out.println("Ongeldige leeftijd! Voer een geldig getal in.");
+            return;
         }
 
-        // Vraag het adres van de passagier
-        System.out.print("Enter passenger address: ");
+
+        System.out.print("Voer het adres van de passagier in: ");
         String address = sc.nextLine();
         if (address.isEmpty()) {
-            System.out.println("Address cannot be empty!");
-            return; // Stop de methode als het adres leeg is
+            System.out.println("Adres mag niet leeg zijn!");
+            return;
         }
 
-        // Als alles geldig is, maak een nieuwe passagier aan
+        System.out.print("Voer het bagagegewicht in (kg): ");
+        String baggageInput = sc.nextLine();
+        if (baggageInput.isEmpty()) {
+            System.out.println("Bagagegewicht mag niet leeg zijn!");
+            return;
+        }
+
+        double baggageWeight;
+        try {
+            baggageWeight = Double.parseDouble(baggageInput);
+        } catch (NumberFormatException e) {
+            System.out.println("Ongeldig bagagegewicht! Voer een geldig getal in.");
+            return;
+        }
+
+        if (baggageWeight > 35) {
+            System.out.println("Bagagegewicht overschrijdt de toegestane limiet van 35kg. Passagier niet aangemaakt.");
+            return;
+        }
+
         Passenger passenger = new Passenger(name, age, address);
+        passenger.setBaggageWeight(baggageWeight);
         passengers.add(passenger);
-        System.out.println("Passenger created.");
+
+        System.out.println("Passagier aangemaakt met bagagegewicht: " + baggageWeight + "kg.");
     }
 
 
     public void createFlight() {
         Scanner sc = new Scanner(System.in);
 
-        // Vraag de vluchtcode
-        System.out.print("Enter flight code: ");
+
+        System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
 
-        // Controleer of de vluchtcode al bestaat
         for (Flight f : flights) {
             if (f.flightCode.equals(flightCode)) {
-                System.out.println("Flight code already exists!");
-                return; // Stop de methode als de vluchtcode al bestaat
+                System.out.println("Vluchtcode bestaat al!");
+                return;
             }
         }
 
-        // Vraag de bestemming
-        System.out.print("Enter destination: ");
+
+        System.out.print("Voer de bestemming in: ");
         String destination = sc.nextLine();
         if (destination.isEmpty()) {
-            System.out.println("Destination cannot be empty!");
-            return; // Stop de methode als de bestemming leeg is
+            System.out.println("Bestemming mag niet leeg zijn!");
+            return;
         }
-        // Vraag het aantal economy en business seats
-        System.out.print("Enter number of economy seats: ");
+
+        System.out.print("Voer het aantal economy seats in: ");
         int economySeats = sc.nextInt();
-        System.out.print("Enter number of business seats: ");
+        System.out.print("Voer het aantal business seats in: ");
         int businessSeats = sc.nextInt();
 
-        // Maak een nieuwe vlucht en voeg deze toe
         Flight flight = new Flight(flightCode, destination, economySeats, businessSeats);
         flights.add(flight);
-        System.out.println("Flight created.");
+        System.out.println("Vlucht aangemaakt.");
     }
-
-
 
     public void boardPassenger() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter passenger name: ");
+        System.out.print("Voer de naam van de passagier in: ");
         String passengerName = sc.nextLine();
-        System.out.print("Enter flight code: ");
+        System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
 
         Flight flight = flights.stream().filter(f -> f.flightCode.equals(flightCode)).findFirst().orElse(null);
@@ -107,129 +123,167 @@ public class Airport {
         if (flight != null && passenger != null && passenger.getTicket() != null) {
             flight.addPassenger(passenger);
         } else {
-            System.out.println("Boarding failed. Invalid ticket or flight.");
+            System.out.println("Instappen mislukt. Ongeldig ticket of vlucht.");
         }
     }
 
     public void assignStaff() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter staff name: ");
+        System.out.print("Voer de naam van het personeel in: ");
         String staffName = sc.nextLine();
-        System.out.print("Enter flight code: ");
+        System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
 
-        // Zoek de vlucht op basis van de vluchtcode
         Flight flight = flights.stream().filter(f -> f.flightCode.equals(flightCode)).findFirst().orElse(null);
 
-        // Zoek het personeel op basis van de naam
+
         Staff staffMember = staff.stream().filter(s -> s.name.equals(staffName)).findFirst().orElse(null);
 
-        // Als we de vlucht en het personeel niet kunnen vinden, geven we een foutmelding
         if (flight != null && staffMember != null) {
             flight.addStaff(staffMember);
         } else {
-            System.out.println("Staff assignment failed.");
+            System.out.println("Toewijzen van personeel mislukt.");
         }
     }
 
 
-    public void printFlightInfo() {
+    public void printVluchtInfo() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter flight code: ");
+        System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
 
         Flight flight = flights.stream().filter(f -> f.flightCode.equals(flightCode)).findFirst().orElse(null);
         if (flight != null) {
             try {
-                // Bestand naar de huidige map (vervang dit pad naar wens)
-                File file = new File("flightInfo.txt");
 
-                // Schrijf naar het bestand
+                File file = new File("VluchtInfo.txt");
+
+
                 FileWriter fw = new FileWriter(file);
                 BufferedWriter bw = new BufferedWriter(fw);
 
-                // Schrijf vluchtinformatie naar bestand
-                bw.write("Flight Code: " + flight.flightCode + "\n");
-                bw.write("Destination: " + flight.destination + "\n");
+                bw.write("Vluchtcode: " + flight.flightCode + "\n");
+                bw.write("Bestemming: " + flight.destination + "\n");
                 bw.write("Economy Seats: " + flight.economySeats + "\n");
-                bw.write("Business Seats: " + flight.businessSeats + "\n");
-                bw.write("Passengers:\n");
+                bw.write("Business Seats: " + flight.businessSeats + "\n\n");
 
-                for (Passenger p : flight.passengers) {
-                    bw.write("- " + p.name + "\n");
+
+                bw.write("Passagiers:\n");
+                if (flight.passengers.isEmpty()) {
+                    bw.write("Geen passagiers toegewezen aan deze vlucht.\n");
+                } else {
+                    for (Passenger p : flight.passengers) {
+                        bw.write("- " + p.name + " (Bagage: " + p.getBaggageWeight() + "kg)\n");
+                    }
+                }
+                bw.write("\n");
+
+                bw.write("Personeel:\n");
+                if (flight.staff.isEmpty()) {
+                    bw.write("Geen personeel toegewezen aan deze vlucht.\n");
+                } else {
+                    for (Staff s : flight.staff) {
+                        bw.write("- " + s.name + " (" + s.role + ")\n");
+                    }
                 }
 
-                bw.close(); // Sluit BufferedWriter
-                System.out.println("Flight information written to flightInfo.txt");
+                bw.close();
 
-                // Open het bestand in Notepad
+                System.out.println("Vluchtinformatie geschreven naar VluchtInfo.txt");
+
                 openNotepad(file);
             } catch (IOException e) {
-                System.out.println("An error occurred while writing to the file.");
+                System.out.println("Er is een fout opgetreden tijdens het schrijven naar het bestand.");
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Flight not found.");
+            System.out.println("Vlucht niet gevonden.");
         }
     }
 
     private void openNotepad(File file) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder("notepad.exe", file.getAbsolutePath());
+            pb.start();
+        } catch (IOException e) {
+            System.out.println("Er is een fout opgetreden bij het openen van Notepad.");
+            e.printStackTrace();
+        }
+    }
+
+    public void createStaff() {
+        Scanner sc = new Scanner(System.in);
+
+
+        System.out.print("Voer de naam van het personeel in: ");
+        String name = sc.nextLine();
+        System.out.print("Voer de leeftijd van het personeel in: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Voer het adres van het personeel in: ");
+        String address = sc.nextLine();
+        System.out.print("Voer de rol van het personeel in (Piloot/Personeel): ");
+        String role = sc.nextLine();
+
+        Staff newStaff;
+        if (role.equalsIgnoreCase("Piloot")) {
+            newStaff = new Pilot(name, age, address);
+        } else {
+            newStaff = new Staff(name, age, address, role);
+        }
+
+        staff.add(newStaff);
+        System.out.println("Personeelslid '" + name + "' toegevoegd als " + role + ".");
     }
 
     public void createTicket() {
         Scanner sc = new Scanner(System.in);
 
-        // Vraag de naam van de passagier
-        System.out.print("Enter passenger name: ");
+        System.out.print("Voer de naam van de passagier in: ");
         String passengerName = sc.nextLine();
 
-        // Zoek de passagier op
         Passenger passenger = passengers.stream().filter(p -> p.name.equals(passengerName)).findFirst().orElse(null);
         if (passenger == null) {
-            System.out.println("Passenger not found.");
+            System.out.println("Passagier niet gevonden.");
             return;
         }
 
-        // Vraag de vluchtcode
-        System.out.print("Enter flight code: ");
+        System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
 
-        // Zoek de vlucht op
         Flight flight = flights.stream().filter(f -> f.flightCode.equals(flightCode)).findFirst().orElse(null);
         if (flight == null) {
-            System.out.println("Flight not found.");
+            System.out.println("Vlucht niet gevonden.");
             return;
         }
 
-        // Vraag de klasse (economy of business)
-        System.out.print("Enter class (economy/business): ");
+        System.out.print("Voer de klasse in (economy/business): ");
         String flightClass = sc.nextLine().toLowerCase();
         if (!flightClass.equals("economy") && !flightClass.equals("business")) {
-            System.out.println("Invalid class.");
+            System.out.println("Ongeldige klasse.");
             return;
         }
 
-        // Maak een nieuw ticket en koppel het aan de passagier en vlucht
         Ticket ticket = new Ticket(passenger, flightClass, flight);
         passenger.setTicket(ticket);
 
-        System.out.println("Ticket created for " + passenger.name + " on flight " + flightCode + " in " + flightClass + " class.");
+        System.out.println("Ticket aangemaakt voor " + passenger.name + " op vlucht " + flightCode + " in " + flightClass + " klasse.");
     }
-
 
     public void run() {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\n1. Create Passenger");
-            System.out.println("2. Create Flight");
-            System.out.println("3. Create Ticket");
-            System.out.println("4. Boarding");
-            System.out.println("5. Assign Staff");
-            System.out.println("6. Print Flight Info");
-            System.out.println("7. Exit");
-            System.out.print("Choose an option: ");
+            System.out.println("\n1. Maak Passagier");
+            System.out.println("2. Maak Vlucht");
+            System.out.println("3. Maak Ticket");
+            System.out.println("4. Maak Personeel");
+            System.out.println("5. Wijs Personeel toe aan Vlucht");
+            System.out.println("6. Boarden");
+            System.out.println("7. Print Vluchtinformatie");
+            System.out.println("8. Exit");
+            System.out.print("Kies een optie: ");
             int choice = sc.nextInt();
-            sc.nextLine();  // consume newline
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
@@ -242,18 +296,21 @@ public class Airport {
                     createTicket();
                     break;
                 case 4:
-                    boardPassenger();
+                    createStaff();
                     break;
                 case 5:
                     assignStaff();
                     break;
                 case 6:
-                    printFlightInfo();
+                    boardPassenger();
                     break;
                 case 7:
+                    printVluchtInfo();
+                    break;
+                case 8:
                     return;
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println("Ongeldige keuze.");
             }
         }
     }

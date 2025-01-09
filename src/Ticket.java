@@ -10,6 +10,7 @@ public class Ticket{
     }
 
 
+
     public Flight getFlight() {
         return flight;
     }
