@@ -14,6 +14,7 @@ public class Ticket{
         return flight;
     }
 
+
     public String getFlightClass() {
         return flightClass;
     }

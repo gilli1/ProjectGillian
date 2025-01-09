@@ -93,6 +93,7 @@ public class Airport {
     }
 
 
+
     public void boardPassenger() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter passenger name: ");

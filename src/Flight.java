@@ -18,6 +18,7 @@ public class Flight {
         this.staff = new ArrayList<>();
     }
 
+
     public void addPassenger(Passenger passenger) {
         if (economySeats + businessSeats > passengers.size()) {
             passengers.add(passenger);

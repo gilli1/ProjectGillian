@@ -4,6 +4,7 @@ public class Pilot extends Staff {
     }
 
 
+
     public void performFlightCheck() {
         System.out.println(name + " is performing a flight check.");
     }
