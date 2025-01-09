@@ -7,17 +7,29 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * De Airport-klasse beheert passagiers, vluchten en personeel.
+ * Het biedt functionaliteiten voor het maken van passagiers, vluchten, tickets,
+ * en het toewijzen van personeel aan vluchten.
+ */
 public class Airport {
+
     private ArrayList<Passenger> passengers;
     private ArrayList<Flight> flights;
     private ArrayList<Staff> staff;
 
+    /**
+     * Constructor om een lege luchthaven te initialiseren.
+     */
     public Airport() {
         this.passengers = new ArrayList<>();
         this.flights = new ArrayList<>();
         this.staff = new ArrayList<>();
     }
 
+    /**
+     * Maakt een nieuwe passagier aan en voegt deze toe aan de lijst van passagiers.
+     */
     public void createPassenger() {
         Scanner sc = new Scanner(System.in);
 
@@ -27,7 +39,6 @@ public class Airport {
             System.out.println("Naam mag niet leeg zijn!");
             return;
         }
-
 
         System.out.print("Voer de leeftijd van de passagier in: ");
         String ageInput = sc.nextLine();
@@ -43,7 +54,6 @@ public class Airport {
             System.out.println("Ongeldige leeftijd! Voer een geldig getal in.");
             return;
         }
-
 
         System.out.print("Voer het adres van de passagier in: ");
         String address = sc.nextLine();
@@ -79,10 +89,11 @@ public class Airport {
         System.out.println("Passagier aangemaakt met bagagegewicht: " + baggageWeight + "kg.");
     }
 
-
+    /**
+     * Maakt een nieuwe vlucht aan en voegt deze toe aan de lijst van vluchten.
+     */
     public void createFlight() {
         Scanner sc = new Scanner(System.in);
-
 
         System.out.print("Voer de vluchtcode in: ");
         String flightCode = sc.nextLine();
@@ -93,7 +104,6 @@ public class Airport {
                 return;
             }
         }
-
 
         System.out.print("Voer de bestemming in: ");
         String destination = sc.nextLine();
@@ -112,6 +122,9 @@ public class Airport {
         System.out.println("Vlucht aangemaakt.");
     }
 
+    /**
+     * Wijs een passagier toe aan een vlucht.
+     */
     public void boardPassenger() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Voer de naam van de passagier in: ");
@@ -129,6 +142,9 @@ public class Airport {
         }
     }
 
+    /**
+     * Wijs een personeelslid toe aan een vlucht.
+     */
     public void assignStaff() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Voer de naam van het personeel in: ");
@@ -137,7 +153,6 @@ public class Airport {
         String flightCode = sc.nextLine();
 
         Flight flight = flights.stream().filter(f -> f.flightCode.equals(flightCode)).findFirst().orElse(null);
-
 
         Staff staffMember = staff.stream().filter(s -> s.name.equals(staffName)).findFirst().orElse(null);
 
@@ -148,7 +163,9 @@ public class Airport {
         }
     }
 
-
+    /**
+     * Print informatie over een specifieke vlucht naar een bestand.
+     */
     public void printVluchtInfo() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Voer de vluchtcode in: ");
@@ -160,7 +177,6 @@ public class Airport {
 
                 File file = new File("VluchtInfo.txt");
 
-
                 FileWriter fw = new FileWriter(file);
                 BufferedWriter bw = new BufferedWriter(fw);
 
@@ -168,7 +184,6 @@ public class Airport {
                 bw.write("Bestemming: " + flight.destination + "\n");
                 bw.write("Economy Seats: " + flight.economySeats + "\n");
                 bw.write("Business Seats: " + flight.businessSeats + "\n\n");
-
 
                 bw.write("Passagiers:\n");
                 if (flight.passengers.isEmpty()) {
@@ -203,6 +218,10 @@ public class Airport {
         }
     }
 
+    /**
+     * Open een bestand in Notepad.
+     * @param file Het bestand dat moet worden geopend.
+     */
     private void openNotepad(File file) {
         try {
             ProcessBuilder pb = new ProcessBuilder("notepad.exe", file.getAbsolutePath());
@@ -213,9 +232,11 @@ public class Airport {
         }
     }
 
+    /**
+     * Creëer een nieuw personeelslid en voeg deze toe aan de lijst.
+     */
     public void createStaff() {
         Scanner sc = new Scanner(System.in);
-
 
         System.out.print("Voer de naam van het personeel in: ");
         String name = sc.nextLine();
@@ -238,6 +259,9 @@ public class Airport {
         System.out.println("Personeelslid '" + name + "' toegevoegd als " + role + ".");
     }
 
+    /**
+     * Creëer een ticket voor een passagier op een specifieke vlucht.
+     */
     public void createTicket() {
         Scanner sc = new Scanner(System.in);
 
@@ -269,15 +293,18 @@ public class Airport {
         Ticket ticket = new Ticket(passenger, flightClass, flight);
         passenger.setTicket(ticket);
 
-        System.out.println("Classes.Ticket aangemaakt voor " + passenger.name + " op vlucht " + flightCode + " in " + flightClass + " klasse.");
+        System.out.println("Ticket aangemaakt voor " + passenger.name + " op vlucht " + flightCode + " in " + flightClass + " klasse.");
     }
 
+    /**
+     * Start de hoofdroutine van de applicatie.
+     */
     public void run() {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("\n1. Maak Passagier");
             System.out.println("2. Maak Vlucht");
-            System.out.println("3. Maak Classes.Ticket");
+            System.out.println("3. Maak Ticket");
             System.out.println("4. Maak Personeel");
             System.out.println("5. Wijs Personeel toe aan Vlucht");
             System.out.println("6. Boarden");
@@ -317,6 +344,10 @@ public class Airport {
         }
     }
 
+    /**
+     * Het startpunt van de applicatie.
+     * @param args Command line argumenten.
+     */
     public static void main(String[] args) {
         Airport airport = new Airport();
         airport.run();
